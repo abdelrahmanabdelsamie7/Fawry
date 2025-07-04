@@ -14,7 +14,7 @@ class ProductRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
             'is_expire' => 'boolean',
-            'expire_at' => 'nullable|date|after:today',
+            'expire_at' => 'required_if:is_expire,true|nullable|date|after:today',
             'is_shippable' => 'boolean',
             'weight' => 'required_if:is_shippable,true|nullable|numeric|min:0',
         ];

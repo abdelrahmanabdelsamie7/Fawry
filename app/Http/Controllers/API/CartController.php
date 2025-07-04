@@ -10,19 +10,27 @@ class CartController extends Controller
     use ResponseJsonTrait;
     public function store(CartRequest $request)
     {
-        $cart = Cart::firstOrCreate(['customer_id' => $request->validated()->customer_id]);
+        $cart = Cart::firstOrCreate(['customer_id' => $request->validated()['customer_id']]);
         return $this->sendSuccess('Cart created or already exists.', $cart);
     }
     public function show($customer_id)
     {
         $cart = Cart::with('items.product')->where('customer_id', $customer_id)->first();
-        if (!$cart) return $this->sendError('Cart not found.', 404);
-        return $this->sendSuccess('Cart retrieved successfully.', $cart);
+        if (!$cart) {
+            return $this->sendError('Cart not found.', 404);
+        }
+        $totalPrice = $cart->items->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
+        $cartData = $cart->toArray();
+        $cartData['total_price'] = round($totalPrice, 2);
+        return $this->sendSuccess('Cart retrieved successfully.', $cartData);
     }
     public function destroy($customer_id)
     {
         $cart = Cart::where('customer_id', $customer_id)->first();
-        if (!$cart) return $this->sendError('Cart not found.', 404);
+        if (!$cart)
+            return $this->sendError('Cart not found.', 404);
         $cart->delete();
         return $this->sendSuccess('Cart deleted successfully.');
     }

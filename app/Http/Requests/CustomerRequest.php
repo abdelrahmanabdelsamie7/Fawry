@@ -9,9 +9,10 @@ class CustomerRequest extends FormRequest
     }
     public function rules(): array
     {
+        $customerId = $this->route('id') ?? $this->route('customer');
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|exists:customers,email',
+            'email' => 'required|string|email|unique:customers,email,'.$customerId,
             'balance' => 'required|numeric|min:0',
         ];
     }

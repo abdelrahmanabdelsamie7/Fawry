@@ -15,6 +15,7 @@ Route::prefix('v1')->group(function () {
         'cart-item' => CartItemController::class,
     ]);
 
-    Route::post('cart/clear/{customerId}', [CartItemController::class, 'clear']);
+    Route::delete('cart/clear/{customerId}', [CartItemController::class, 'clear']);
     Route::post('checkout/{customerId}', [OrderController::class, 'checkout']);
+    Route::get('my-orders/{customerId}', [OrderController::class, 'showMyOrders']);
 });

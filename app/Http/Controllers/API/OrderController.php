@@ -31,7 +31,7 @@ class OrderController extends Controller
                 $subtotal += $linePrice;
                 if ($product->is_shippable) {
                     $shippingItems[] = [
-                        'name'   => $product->name,
+                        'name' => $product->name,
                         'weight' => $product->weight * $item->quantity
                     ];
                     $shippingFees += 30;
@@ -46,51 +46,34 @@ class OrderController extends Controller
             $customer->balance -= $total;
             $customer->save();
             $order = Order::create([
-                'customer_id'   => $customer->id,
-                'subtotal'      => $subtotal,
+                'customer_id' => $customer->id,
+                'subtotal' => $subtotal,
                 'shipping_fees' => $shippingFees,
-                'total_paid'    => $total,
+                'total_paid' => $total,
             ]);
             foreach ($cart->items as $item) {
                 OrderItem::create([
-                    'order_id'   => $order->id,
+                    'order_id' => $order->id,
                     'product_id' => $item->product_id,
-                    'quantity'   => $item->quantity,
-                    'price'      => $item->product->price
+                    'quantity' => $item->quantity,
+                    'price' => $item->product->price
                 ]);
             }
             $cart->items()->delete();
             DB::commit();
-            $this->printShipmentNotice($shippingItems);
-            $this->printCheckoutReceipt($order);
             return $this->sendSuccess('Checkout completed successfully.', $order);
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->sendError('Checkout failed: ' . $e->getMessage());
         }
     }
-    private function printShipmentNotice($shippingItems)
+    public function showMyOrders($customerId)
     {
-        if (count($shippingItems)) {
-            echo "** Shipment notice **\n";
-            $totalWeight = 0;
-            foreach ($shippingItems as $item) {
-                echo "{$item['name']}\t{$item['weight']}g\n";
-                $totalWeight += $item['weight'];
-            }
-            echo "Total package weight " . ($totalWeight / 1000) . "kg\n";
-        }
-    }
-    private function printCheckoutReceipt(Order $order)
-    {
-        echo "** Checkout receipt **\n";
-        foreach ($order->items as $item) {
-            echo "{$item->quantity}x {$item->product->name}\t" . ($item->price * $item->quantity) . "\n";
-        }
-
-        echo "----------------------\n";
-        echo "Subtotal\t{$order->subtotal}\n";
-        echo "Shipping\t{$order->shipping_fees}\n";
-        echo "Amount\t\t{$order->total_paid}\n";
+        $customer = Customer::findOrFail($customerId);
+        $orders = Order::with(['items.product'])
+            ->where('customer_id', $customer->id)
+            ->latest()
+            ->get();
+        return $this->sendSuccess('Orders retrieved successfully.', $orders);
     }
 }

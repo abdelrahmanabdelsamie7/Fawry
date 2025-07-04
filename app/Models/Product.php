@@ -14,6 +14,13 @@ class Product extends Model
         'is_shippable' => 'boolean',
         'expire_at' => 'date',
     ];
+    public function getWeightFormattedAttribute()
+    {
+        if ($this->is_shippable && $this->weight !== null) {
+            return number_format($this->weight, 3) . 'Kg';
+        }
+        return null;
+    }
     public function cartItems()
     {
         return $this->hasMany(CartItem::class);
