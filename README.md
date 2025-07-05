@@ -63,3 +63,19 @@ class ProductService extends BaseService
         parent::__construct($model);
     }
 }
+
+###  Traits for Logic Reuse
+
+Because PHP does not support multi-inheritance, we used custom traits to:
+- UsesUuid: Automatically assigns UUIDs to models instead of auto-incrementing IDs.
+- ResponseJsonTrait: A unified structure for all API responses (success, errors, validation messages, etc).
+- HandlesCartLogic: Shared logic between cart and order systems.
+
+----
+
+
+## Database Mapping
+
+<img src="./public/Fawry - Mapping DB.png" alt="Database Mapping" width="800"/>
+
+- Tables include: products, carts, cart_items, orders, order_items, customers
