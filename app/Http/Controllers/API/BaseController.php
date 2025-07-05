@@ -29,7 +29,7 @@ class BaseController extends Controller
     {
         $data = app($this->requestClass)->validated();
         $item = $this->modelClass::create($data);
-        return $this->sendSuccess("{$this->itemName} created successfully.", $item, 201);
+        return $this->sendSuccess("{$this->itemName} created successfully.", $this->applyResource($item), 201);
     }
     public function show($id)
     {
@@ -45,7 +45,7 @@ class BaseController extends Controller
             return $this->sendError("{$this->itemName} not found", 404);
         $data = app($this->requestClass)->validated();
         $item->update($data);
-        return $this->sendSuccess("{$this->itemName} updated successfully.", $item);
+        return $this->sendSuccess("{$this->itemName} updated successfully.", $this->applyResource($item));
     }
     public function destroy($id)
     {
