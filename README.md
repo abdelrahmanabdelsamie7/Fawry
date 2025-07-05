@@ -91,7 +91,7 @@ Because PHP does not support multiple inheritance, we utilized **custom traits**
 
 ### Author
 
-Made with by **Abdelrahman Abdelsamie Hussain**  
+Made by **Abdelrahman Abdelsamie Hussain**  
 Full-Stack Web Developer | Full Stack Intern  
 [LinkedIn](https://www.linkedin.com/in/abdelrahman-abdelsamie-hussain/)  
 [My GitHub](https://github.com/abdelrahmanabdelsamie7)
