@@ -63,19 +63,35 @@ class ProductService extends BaseService
         parent::__construct($model);
     }
 }
+```
 
-###  Traits for Logic Reuse
+### Traits for Logic Reuse
 
-Because PHP does not support multi-inheritance, we used custom traits to:
-- UsesUuid: Automatically assigns UUIDs to models instead of auto-incrementing IDs.
-- ResponseJsonTrait: A unified structure for all API responses (success, errors, validation messages, etc).
-- HandlesCartLogic: Shared logic between cart and order systems.
+Because PHP does not support multiple inheritance, we utilized **custom traits** to achieve modular and reusable logic across controllers and services:
 
-----
+- `UsesUuid`: Automatically assigns UUIDs to models instead of auto-incrementing IDs.
+- `ResponseJsonTrait`: A unified structure for all API responses (success, errors, validation messages, etc).
+- `HandlesCartLogic`: Shared logic between cart and order systems.
+- `CalculatesWeight`: Calculates total cart weight on checkout.
 
+> Traits help us overcome PHP’s single inheritance limitation while keeping code **DRY** and **organized**.
 
-## Database Mapping
+---
 
-<img src="./public/Fawry - Mapping DB.png" alt="Database Mapping" width="800"/>
+### Database Mapping
 
-- Tables include: products, carts, cart_items, orders, order_items, customers
+<p align="center">
+  <img src="./public/Fawry - Mapping DB.png" alt="Database Mapping" width="800"/>
+</p>
+
+- **Tables:** `products`, `customers`, `carts`, `cart_items`, `orders`, `order_items`
+- Relationships are structured to preserve product snapshots inside orders for historical accuracy.
+
+---
+
+### Author
+
+Made with by **Abdelrahman Abdelsamie Hussain**  
+Full-Stack Web Developer | Full Stack Intern  
+[LinkedIn](https://www.linkedin.com/in/abdelrahman-abdelsamie-hussain/)  
+[My GitHub](https://github.com/abdelrahmanabdelsamie7)
