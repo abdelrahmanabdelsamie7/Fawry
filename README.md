@@ -2,7 +2,7 @@
   <img src="./public/fawry.jpeg" alt="Fawry Logo" width="200"/>
 </p>
 
-# 🛒 Fawry Quantum Internship Challenge – E-Commerce Full Stack System
+# Fawry Quantum Internship Challenge – E-Commerce Full Stack System
 
 A fully functional **E-Commerce system** developed as part of the **Fawry Quantum Internship Challenge**.  
 This project simulates a real-world platform where customers can browse and purchase products, manage their cart, and place orders — with proper validation, stock checks, shippable flags, and expiration handling.
