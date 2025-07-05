@@ -81,7 +81,7 @@ Because PHP does not support multiple inheritance, we utilized **custom traits**
 ### Database Mapping
 
 <p align="center">
-  <img src="./public/Fawry - Mapping DB.png" alt="Database Mapping" width="800"/>
+  <img src="./public/Fawry - Mapping DB.png" alt="Database Mapping" width="600" height="450"/>
 </p>
 
 - **Tables:** `products`, `customers`, `carts`, `cart_items`, `orders`, `order_items`
